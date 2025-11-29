@@ -33,3 +33,11 @@ cd build
 cmake ..
 cmake --build .
 ```
+
+## rust
+```
+cargo new hello_world
+cargo run
+```
+
+## haskell
