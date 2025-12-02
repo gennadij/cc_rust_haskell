@@ -2,8 +2,6 @@
 
 ## TODO
 
-- [ ] add separat image (Dockerfile) for cc, rust, haskel
-
 ## cc
 - create project dir
 - crate CMakeLists.txt
@@ -45,3 +43,8 @@ cargo run
 ```
 
 ## haskell
+```
+stack setup
+stack templates
+stack new hello_world
+``` 
