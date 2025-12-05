@@ -2,7 +2,7 @@
 
 ## TODO
 - [x] create uWebSocket in c++
-- [ ] create websocket_html_js_client
+- [x] create websocket_html_js_client
 - [ ] create helo world shared object in c++, rust and haskell
 
 ## cc
@@ -51,6 +51,10 @@ stack setup
 stack templates
 stack new hello_world
 ``` 
+- generate so
+```
+mkdir dist && stack ghc -- -dynamic -shared -fPIC -o dist/libexactroot.so -odir dist -hidir dist -stubdir dist/include src/ExactRootFFI.hs src/ExactRoot.hs
+```
 
 ### uWebsockets
 ```
