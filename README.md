@@ -12,6 +12,8 @@
 
 ## Architecture
 
+[Link to dot Architecture](https://dreampuf.github.io/GraphvizOnline/?engine=dot#digraph%20Arcitecture%20%7B%0A%20%20%20%20node%20%5Bshape%3Dbox%5D%3B%0A%20%20%20%20%22Webbrowser%20client%22%20-%3E%20%22Docker%20Node.js%20%20WebServer%2FgPRC%20Clients%22%0A%20%20%20%20%22Docker%20Node.js%20%20WebServer%2FgPRC%20Clients%22%20-%3E%20%22Node.js%20Client%22%20-%3E%20%0A%20%20%20%20%22Haskell%20gRPC%20Server%22%20-%3E%20%22exact_root%20Haskell%20impl%22%0A%20%20%20%20%22Node.js%20Client%22%20-%3E%20%22C%2B%2B%20sPRC%20Server%22%20-%3E%20%22exact_root%20C%2B%2B%20impl%22%0A%20%20%20%20%22Node.js%20Client%22%20-%3E%20%22Rust%20sPRC%20Server%22%20-%3E%20%22exact_root%20Rust%20impl%22%0A%7D)
+
 ```dot
 digraph Arcitecture {
     node [shape=box];
