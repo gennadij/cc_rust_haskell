@@ -85,6 +85,15 @@ cmake --build build -j
 ```
 
 ### proto
+```console
+apt install -y protobuf-compiler
 ```
-apt install -y protobuf-compiler libprotobuf-dev
+
+### proto haskell
+```console
+stack install proto-lens-protoc
+```
+- im Projekt
+```console
+protoc --plugin=protoc-gen-haskell=$(stack exec -- which proto-lens-protoc)  --haskell_out=src proto/hello_world.proto
 ```
