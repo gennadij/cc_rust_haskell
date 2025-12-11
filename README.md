@@ -83,3 +83,8 @@ git clone https://github.com/flipkickmedia/uwebsockets-cmake.git
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
 ```
+
+### proto
+```
+apt install -y protobuf-compiler libprotobuf-dev
+```
