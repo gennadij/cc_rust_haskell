@@ -12,7 +12,7 @@ int main() {
     sockaddr_in addr{};
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = INADDR_ANY;
-    addr.sin_port = htons(5000);
+    addr.sin_port = htons(4000);
 
     bind(server_fd, (sockaddr*)&addr, sizeof(addr));
     listen(server_fd, 1);

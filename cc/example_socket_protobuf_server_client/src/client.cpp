@@ -11,7 +11,7 @@ int main() {
 
     sockaddr_in addr{};
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(5000);
+    addr.sin_port = htons(4000);
     inet_pton(AF_INET, "127.0.0.1", &addr.sin_addr);
 
     connect(sock, (sockaddr*)&addr, sizeof(addr));
