@@ -3,8 +3,8 @@ use tokio::io::AsyncReadExt;
 use bytes::BytesMut;
 use prost::Message;
 
-pub mod hello_world {
-    include!(concat!(env!("OUT_DIR"), "/hello_world.rs"));
+pub mod demo {
+    include!(concat!(env!("OUT_DIR"), "/demo.rs"));
 }
 
 #[tokio::main]
@@ -13,10 +13,18 @@ async fn main() -> anyhow::Result<()> {
     println!("Server wartet auf Nachricht...");
 
     let (mut socket, _) = listener.accept().await?;
-    let mut buf = BytesMut::with_capacity(1024);
-    socket.read_buf(&mut buf).await?;
+    
+        // 1. Längenpräfix lesen (4 Bytes)
+    let mut len_buf = [0u8; 4];
+    socket.read_exact(&mut len_buf).await?;
+    let msg_len = u32::from_be_bytes(len_buf) as usize;
 
-    match hello_world::ChatMessage::decode(buf.freeze()) {
+    // 2. Nachricht lesen
+    let mut buf = vec![0u8; msg_len];
+    socket.read_exact(&mut buf).await?;
+
+    // 3. Protobuf dekodieren
+    match demo::ChatMessage::decode(&*buf) {
         Ok(chat_msg) => {
             println!(
                 "Empfangen: {} (id={})",

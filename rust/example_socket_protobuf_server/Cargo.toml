@@ -12,6 +12,7 @@ prost-types = "0.12"
 bytes = "1"
 tokio-util = "0.7"
 indexmap = "1.9.3"
+anyhow = "1.0.100"
 
 [build-dependencies]
 prost-build = "0.12"
