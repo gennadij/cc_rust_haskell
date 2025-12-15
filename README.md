@@ -121,5 +121,8 @@ docker run -dit --name my-running-app -p 8080:80 my-apache2
 docker build -t example_restapi_json_server .
 docker run -it -v $(pwd):/app example_restapi_json_server bash
 docker run -it -p 8080:8080 -v $(pwd):/app example_restapi_json_server /app/start_rest_api_json_server.sh
-
+```
+## haskell rest api
+```console
+curl http://localhost:3000/hello/Bob
 ```
