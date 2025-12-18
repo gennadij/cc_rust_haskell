@@ -21,3 +21,7 @@ main = scotty 8082 $ do
     liftIO $ print ( "Exact Root" ++ show(ER.berechneExacteWurzel radicandInt))
     let result = head $ ER.berechneExacteWurzel radicandInt
     json $ ExactSquareRoot { multiplicator = TL.pack (show $ ER.multiplikator result ), rootValue = TL.pack (show $ ER.wurzelwert result ) }
+
+getResult :: [ER.Res] -> [(Int, Int)]
+getResult [] = []
+getResult (x:xs) = (ER.multiplikator x, ER.wurzelwert x) : getResult xs
