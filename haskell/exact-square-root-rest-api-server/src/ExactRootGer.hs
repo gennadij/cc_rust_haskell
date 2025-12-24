@@ -1,36 +1,32 @@
--- TODO
--- [ ] - ist radicand im Json ueberfluessig?
--- [ ] - quellcode uebersetzen
-
-module ExactRoot
+module ExactRootGer
 (
-  getExactSqrt,
+  berechneExacteWurzel,
   Res( .. )
 ) where
   
 import Data.List ( partition )
 
 data Res = Res {
-  multiplicator :: Int,
-  sqrt :: Int,
-  radicand :: Int
+  multiplikator :: Int,
+  wurzelwert :: Int,
+  radikand :: Int
 } deriving (Eq, Show)
 
-getExactSqrt :: Int -> [Res]
-getExactSqrt inputRadikand = do
+berechneExacteWurzel :: Int -> [Res]
+berechneExacteWurzel inputRadikand = do
   if (inputRadikand < 0)
-    then calcNegativeSqrt
-    else calcPositiveSqrt inputRadikand
+    then berechneNegativenWurzel
+    else berechenPositivenWurzel inputRadikand
 
-calcPositiveSqrt :: Int -> [Res]
-calcPositiveSqrt positiveRadicand = do
-  let oddNums                    = createOddNumbers positiveRadicand
-  let numsUpToRadicandHalf       = getNumsUpToRadicandHalf positiveRadicand
-  let standardWerte       = reduziereStandardWerte positiveRadicand (calcDefaultSqrts oddNums)
-  let radikandWurzelwerte = zippen numsUpToRadicandHalf standardWerte
-  let einfacheWurzelwerte = berechneEinfacheWurzelwert positiveRadicand radikandWurzelwerte
-  -- let komplexeWurzelwerte = berechneKomplexeWurzelwert positiveRadicand radikandWurzelwerte
-  let komplexeWurzelwerte' = berechneKomplexeWurzelwert' positiveRadicand radikandWurzelwerte
+berechenPositivenWurzel :: Int -> [Res]
+berechenPositivenWurzel positiveRadikand = do
+  let ungeradeZahlen      = berechneUngeradeZahlen positiveRadikand
+  let einfacheReihe       = berechneEinfacheReihe positiveRadikand
+  let standardWerte       = reduziereStandardWerte positiveRadikand (berechneStandardWerte ungeradeZahlen)
+  let radikandWurzelwerte = zippen einfacheReihe standardWerte
+  let einfacheWurzelwerte = berechneEinfacheWurzelwert positiveRadikand radikandWurzelwerte
+  -- let komplexeWurzelwerte = berechneKomplexeWurzelwert positiveRadikand radikandWurzelwerte
+  let komplexeWurzelwerte' = berechneKomplexeWurzelwert' positiveRadikand radikandWurzelwerte
   -- case einfacheWurzelwerte of
   --  Just w  -> Res (-1) w (-1)
   --  Nothing -> case komplexeWurzelwerte of 
@@ -40,20 +36,20 @@ calcPositiveSqrt positiveRadicand = do
     Just w -> [Res (-1) w (-1)]
     Nothing -> map (\(r,w) -> Res r w (-1)) komplexeWurzelwerte' 
 
-calcNegativeSqrt :: [Res]
-calcNegativeSqrt = [Res (-1) (-1) (-1)]
+berechneNegativenWurzel :: [Res]
+berechneNegativenWurzel = [Res (-1) (-1) (-1)]
 
-createOddNumbers :: Int -> [Int]
-createOddNumbers radikandForUngeradeZahlen = filter odd [1 .. radikandForUngeradeZahlen]
+berechneUngeradeZahlen :: Int -> [Int]
+berechneUngeradeZahlen radikandForUngeradeZahlen = filter odd [1 .. radikandForUngeradeZahlen]
 
-getNumsUpToRadicandHalf :: Int -> [Int]
-getNumsUpToRadicandHalf radikandFornumsUpToRadicandHalf = [2 .. ((radikandFornumsUpToRadicandHalf `quot` 2) +1)]
+berechneEinfacheReihe :: Int -> [Int]
+berechneEinfacheReihe radikandForEinfacheReihe = [2 .. ((radikandForEinfacheReihe `quot` 2) +1)]
 
 -- die Berechnung bis Resultat der Addition < Radikand 
-calcDefaultSqrts :: [Int] -> [Int]
-calcDefaultSqrts  [] = []
-calcDefaultSqrts  [_] = []
-calcDefaultSqrts  (x:y:xs) = sumOfDefaultValues : calcDefaultSqrts (sumOfDefaultValues : xs)
+berechneStandardWerte :: [Int] -> [Int]
+berechneStandardWerte  [] = []
+berechneStandardWerte  [_] = []
+berechneStandardWerte  (x:y:xs) = sumOfDefaultValues : berechneStandardWerte (sumOfDefaultValues : xs)
   where sumOfDefaultValues = x + y
 
 -- TODO
@@ -63,10 +59,8 @@ calcDefaultSqrts  (x:y:xs) = sumOfDefaultValues : calcDefaultSqrts (sumOfDefault
 --  head, called at src/ExactRoot.hs:62:56 in exact-square-root-rest-api-server-0.1.0.0-KuYOQvFF0Ty6mV7TJ0bbqb:ExactRoot
 
 reduziereStandardWerte :: Int -> [Int] -> [Int]
-reduziereStandardWerte radiKand stWerte = 
-  case partition (< radiKand) stWerte of
-    (xs, y:_) -> xs ++ [y]
-    (xs, [])  -> xs
+reduziereStandardWerte radiKand stWerte = fst part ++ [head (snd part)]
+  where part = partition (< radiKand) stWerte 
 
 zippen :: [Int] -> [Int] -> [(Int, Int)]
 zippen = zip

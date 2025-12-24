@@ -60,3 +60,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - exact-square-root-rest-api-server
+    - hspec

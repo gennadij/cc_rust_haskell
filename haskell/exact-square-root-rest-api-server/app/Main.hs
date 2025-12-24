@@ -7,13 +7,12 @@ import Web.Scotty
 import Data.Aeson (ToJSON)
 import GHC.Generics (Generic)
 import qualified Data.Text.Lazy as TL 
-import qualified ExactRoot as ER ( berechneExacteWurzel, Res ( .. )) 
+import qualified ExactRoot as ER ( getExactSqrt, Res ( .. )) 
 
 data ExactSquareRoot = ExactSquareRoot 
   { 
     multiplicator :: Int, 
-    rootValue :: Int, 
-    radicand:: Int 
+    squareRoot :: Int
   } deriving (Show, Generic)
 instance ToJSON ExactSquareRoot
 
@@ -25,8 +24,7 @@ main = scotty 8082 $ do
     let radicandInt = read (TL.unpack radicandText) :: Int
     -- liftIO $ print ( "Exact Root" ++ show(ER.berechneExacteWurzel radicandInt))
     json $  [ ExactSquareRoot {  
-                                multiplicator = ER.multiplikator result
-                              , rootValue = ER.wurzelwert result
-                              , radicand = ER.radikand result 
-                              } | result <- ER.berechneExacteWurzel radicandInt
+                                multiplicator = ER.multiplicator result
+                              , squareRoot = ER.sqrt result
+                              } | result <- ER.getExactSqrt radicandInt
             ]

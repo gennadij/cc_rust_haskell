@@ -26,7 +26,7 @@ source-repository head
 library
   exposed-modules:
       ExactRoot
-      ExactRootEng
+      ExactRootGer
   other-modules:
       Paths_exact_square_root_rest_api_server
   autogen-modules:
@@ -72,6 +72,7 @@ test-suite exact-square-root-rest-api-server-test
       aeson
     , base >=4.7 && <5
     , exact-square-root-rest-api-server
+    , hspec
     , scotty
     , text
   default-language: Haskell2010
