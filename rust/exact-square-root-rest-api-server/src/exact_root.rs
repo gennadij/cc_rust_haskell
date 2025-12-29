@@ -32,7 +32,7 @@ pub mod exact_root {
             }
             result
           }else{ 
-            vec![Res{multiplicator : -1, sqrt : -1}]
+            vec![]
           } 
         }
       }
@@ -106,26 +106,26 @@ pub mod exact_root {
 
 #[cfg(test)]
 mod tests {
-    use crate::exact_root::calc_exact_root::berechne_exacte_wurzel;
-    use crate::exact_root::calc_exact_root::Res;
+    use crate::exact_root::exact_root::get_exact_sqrt;
+    use crate::exact_root::exact_root::Res;
 
     #[test]
     fn test_get_exact_sqrt() {
-        assert_eq!(berechne_exacte_wurzel(0), vec![Res{multiplicator : -1, sqrt : 0}]);
-        assert_eq!(berechne_exacte_wurzel(1), vec![Res{multiplicator : -1, sqrt : 1}]);
-        assert_eq!(berechne_exacte_wurzel(2), vec![Res{multiplicator : -1, sqrt : -1}]);
-        assert_eq!(berechne_exacte_wurzel(3), vec![Res{multiplicator : -1, sqrt : -1}]);
-        assert_eq!(berechne_exacte_wurzel(4), vec![Res{multiplicator : -1, sqrt : 2}]);
-        assert_eq!(berechne_exacte_wurzel(5), vec![Res{multiplicator : -1, sqrt : -1}]);
-        assert_eq!(berechne_exacte_wurzel(6), vec![Res{multiplicator : -1, sqrt : -1}]);
-        assert_eq!(berechne_exacte_wurzel(7), vec![Res{multiplicator : -1, sqrt : -1}]);
-        assert_eq!(berechne_exacte_wurzel(8), vec![Res{multiplicator : 2, sqrt : 2}]);
-        assert_eq!(berechne_exacte_wurzel(9), vec![Res{multiplicator : -1, sqrt : 3}]);
-        assert_eq!(berechne_exacte_wurzel(10), vec![Res{multiplicator : -1, sqrt : -1}]);
-        assert_eq!(berechne_exacte_wurzel(100), vec![Res{multiplicator : -1, sqrt : 10}]);
-        assert_eq!(berechne_exacte_wurzel(1000), vec![Res { multiplicator: 2, sqrt: 250 }, 
+        assert_eq!(get_exact_sqrt(0), vec![Res{multiplicator : -1, sqrt : 0}]);
+        assert_eq!(get_exact_sqrt(1), vec![Res{multiplicator : -1, sqrt : 1}]);
+        assert_eq!(get_exact_sqrt(2), vec![]);
+        assert_eq!(get_exact_sqrt(3), vec![]);
+        assert_eq!(get_exact_sqrt(4), vec![Res{multiplicator : -1, sqrt : 2}]);
+        assert_eq!(get_exact_sqrt(5), vec![]);
+        assert_eq!(get_exact_sqrt(6), vec![]);
+        assert_eq!(get_exact_sqrt(7), vec![]);
+        assert_eq!(get_exact_sqrt(8), vec![Res{multiplicator : 2, sqrt : 2}]);
+        assert_eq!(get_exact_sqrt(9), vec![Res{multiplicator : -1, sqrt : 3}]);
+        assert_eq!(get_exact_sqrt(10), vec![]);
+        assert_eq!(get_exact_sqrt(100), vec![Res{multiplicator : -1, sqrt : 10}]);
+        assert_eq!(get_exact_sqrt(1000), vec![Res { multiplicator: 2, sqrt: 250 }, 
                                                       Res { multiplicator: 5, sqrt: 40 }, 
                                                       Res { multiplicator: 10, sqrt: 10 }]);
-        // assert_eq!(berechne_exacte_wurzel(123956844), vec![Res{multiplicator : 2, sqrt : 30989211}]);
+        // assert_eq!(get_exact_sqrt(123956844), vec![Res{multiplicator : 2, sqrt : 30989211}]);
     }
 }

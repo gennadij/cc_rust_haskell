@@ -7,6 +7,8 @@ use axum::{
 };
 use serde::Serialize;
 use tokio::net::TcpListener;
+use tower_http::cors::CorsLayer;
+use axum::http::Method;
 
 #[derive(Serialize)]
 struct Result {
@@ -16,10 +18,14 @@ struct Result {
 
 #[tokio::main]
 async fn main() {
+    let cors = CorsLayer::new()
+          .allow_origin(tower_http::cors::Any)
+          .allow_methods([Method::GET])
+          .allow_headers(tower_http::cors::Any);
     let app = Router::new()
-        .route("/exactSquareRoot/:param", get(exact_square_root));
+        .route("/exactSquareRoot/:param", get(exact_square_root).layer(cors));
 
-    let listener = TcpListener::bind("127.0.0.1:8083")
+    let listener = TcpListener::bind("0.0.0.0:8083")
         .await
         .unwrap();
 
