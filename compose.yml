@@ -1,0 +1,11 @@
+services:
+  webserver:
+    build: webclient
+    ports:
+      - 8080:80
+    restart: unless-stopped
+  rust_rest_api_server_sqrt:
+    build: rust/exact-square-root-rest-api-server
+    ports:
+      - 8083:8083
+    restart: unless-stopped

@@ -1,13 +1,15 @@
-# Dockerfile for c++ and rust and haskel development environment
-FROM ubuntu:24.04
+FROM ubuntu:24.04 AS builder_haskell
 RUN apt update \
-&& apt install -y cmake build-essential curl git vim
-# protobuf-compiler
-## install stack
-# RUN curl -sSL https://get.haskellstack.org/ | sh \
-# && stack setup
-# install rust
-# RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable
-# ENV PATH="/root/.cargo/bin:${PATH}"
-#RUN useradd -ms /bin/bash dev
-#USER dev
+  && apt install -y curl
+# RUN curl -sSL https://get.haskellstack.org/ | sh
+# WORKDIR /app
+# COPY haskell/exact-square-root-rest-api-server .
+# RUN stack install --local-bin-path ./build/bin
+# # RUN stack setup && stack build --allow-different-user
+
+
+# FROM httpd:2.4
+# WORKDIR /app
+# COPY --from=builder_haskell /app/build/bin/* .
+# COPY ./webclient/web-content/ /usr/local/apache2/htdocs/
+# COPY start_rest_server.sh .
