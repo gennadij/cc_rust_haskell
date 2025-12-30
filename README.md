@@ -17,6 +17,12 @@ digraph Arcitecture {
 }
 ```
 
+## Run project
+
+```console
+cd cc_rust_haskell
+docker compose up
+``
 ## CC
 
 ### run cmake
@@ -25,6 +31,14 @@ digraph Arcitecture {
 cd build
 cmake ..
 cmake --build .
+```
+
+or
+
+```console
+cmake -B build -S .
+cmake --build build
+
 ```
 
 ### rest api
