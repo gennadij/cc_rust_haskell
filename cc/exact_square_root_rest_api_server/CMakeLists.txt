@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 project(exact_square_root_rest_api_server LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(EXECUTABLE_NAME exact_square_root_rest_api_server)
+set(LYBRARY_NAME exact_sqrt)
+
 
 include(FetchContent)
 
@@ -19,19 +23,32 @@ FetchContent_Declare(httplib
 )
 FetchContent_MakeAvailable(httplib)
 
-add_executable(exact_square_root_rest_api_server 
-  src/main.cpp
-  src/exact_square_root.cpp
-  src/exact_square_root.h)
+# Catch2
+FetchContent_Declare(
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2
+    GIT_TAG v3.12.0
+    GIT_SHALLOW TRUE
+  )
+FetchContent_MakeAvailable(Catch2)
+list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 
-# Include-Pfade setzen (httplib ist header-only)
-target_include_directories(exact_square_root_rest_api_server PRIVATE
-  ${httplib_SOURCE_DIR}
-  ${CMAKE_SOURCE_DIR}/src
-)
+
+# add_executable(exact_square_root_rest_api_server 
+#   src/main.cpp
+#   src/exact_square_root.cpp
+#   src/exact_square_root.h)
+
+
+
 
 # Linke json-Bibliothek
-target_link_libraries(exact_square_root_rest_api_server PRIVATE nlohmann_json::nlohmann_json)
+# target_link_libraries(exact_square_root_rest_api_server PRIVATE nlohmann_json::nlohmann_json)
+
+
+add_subdirectory(app)
+add_subdirectory(src)
+add_subdirectory(tests)
 
 # Threads & optional OpenSSL
 # find_package(Threads REQUIRED)
