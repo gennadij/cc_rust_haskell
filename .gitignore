@@ -3,4 +3,3 @@ target
 *.lock
 .stack-work
 dist
-app
