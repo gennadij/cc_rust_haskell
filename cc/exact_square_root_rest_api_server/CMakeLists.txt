@@ -50,6 +50,8 @@ add_subdirectory(app)
 add_subdirectory(src)
 add_subdirectory(tests)
 
+enable_testing()
+
 # Threads & optional OpenSSL
 # find_package(Threads REQUIRED)
 # target_link_libraries(rest_cpp PRIVATE Threads::Threads)

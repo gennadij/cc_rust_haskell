@@ -1,5 +1,3 @@
-
-
 set(TEST_MAIN "unit_tests")
 
 set(TESTS_SOURCES

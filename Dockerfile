@@ -1,6 +1,6 @@
 FROM ubuntu:24.04 AS builder_haskell
 RUN apt update \
-  && apt install -y curl
+  && apt install -y curl git
 # RUN curl -sSL https://get.haskellstack.org/ | sh
 # WORKDIR /app
 # COPY haskell/exact-square-root-rest-api-server .
