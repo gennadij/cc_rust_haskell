@@ -10,13 +10,13 @@ std::vector<Res> ExactSquareRoot::GetExactSqrt(){
   if(radicand_  == 0 || radicand_ == 1){
     return {{-1, radicand_}};
   }
-  const auto odd_numbers = GetOddNumbers();
+  // const auto odd_numbers = GetOddNumbers();
 
   auto timepoint_1 = std::chrono::high_resolution_clock::now();
   auto duration_1 = std::chrono::duration_cast<std::chrono::milliseconds>(timepoint_1 - start).count();
   std::cout << "Timepoint 1: " << duration_1 << " Millisekunden\n";
 
-  const auto default_sqrts = CalcDefaultSqrts(odd_numbers);
+  // const auto default_sqrts = CalcDefaultSqrts(odd_numbers);
 
   auto timepoint_2 = std::chrono::high_resolution_clock::now();
   auto duration_2 = std::chrono::duration_cast<std::chrono::milliseconds>(timepoint_2 - timepoint_1).count();
@@ -24,7 +24,7 @@ std::vector<Res> ExactSquareRoot::GetExactSqrt(){
   // TODO
   //std::vector<int>&&
   //std::vector<int>&
-  ZipRadicandsAndDefaultSqrts(default_sqrts);
+  // ZipRadicandsAndDefaultSqrts(default_sqrts);
 
   auto timepoint_3 = std::chrono::high_resolution_clock::now();
   auto duration_3 = std::chrono::duration_cast<std::chrono::milliseconds>(timepoint_3 - timepoint_2).count();
@@ -82,8 +82,24 @@ std::vector<int> ExactSquareRoot::CalcDefaultSqrts(std::vector<int> odd_numbers)
     }
   }
 
+
   result.erase(result.begin());
   return result;
+}
+
+void ExactSquareRoot::SetSqrtAndRadicand(){
+  // std::vector<std::pair<int, int>> res;
+  int odd_number{1};
+  int acc{1};
+  int sqrt{1};
+  while(true){
+    odd_number += 2;
+    acc += odd_number;
+    sqrt += 1;
+    sqrt_and_radicand_.push_back({sqrt, acc});
+    if(acc >= radicand_) break;
+  }
+  // return res;
 }
 
 std::vector<int> ExactSquareRoot::GetOddNumbers(){
@@ -105,14 +121,14 @@ void ExactSquareRoot::ZipRadicandsAndDefaultSqrts(std::vector<int> default_sqrts
   std::vector<int> radicands(default_sqrts.size());
   std::iota(radicands.begin(), radicands.end(), 2);
   for(int i = 0; i < radicands.size(); ++i){
-    radicand_and_sqrt_.push_back({radicands.at(i), default_sqrts.at(i)});
+    sqrt_and_radicand_.push_back({radicands.at(i), default_sqrts.at(i)});
   }
 }
 
 std::optional<int> ExactSquareRoot::SearchSimpleSqrt(){
   auto it = std::ranges::find_if(
-    radicand_and_sqrt_, [this](const auto& r_and_s){return r_and_s.second == radicand_;});
-  if(it != radicand_and_sqrt_.end()){
+    sqrt_and_radicand_, [this](const auto& r_and_s){return r_and_s.second == radicand_;});
+  if(it != sqrt_and_radicand_.end()){
     return it->first;
   }else{
     return std::nullopt;
@@ -121,7 +137,7 @@ std::optional<int> ExactSquareRoot::SearchSimpleSqrt(){
 
 std::vector<std::pair<int, int>> ExactSquareRoot::SearchComplexSqrt(){
   std::vector<std::pair<int, int>> result;
-  for(const auto& r_and_s : radicand_and_sqrt_){
+  for(const auto& r_and_s : sqrt_and_radicand_){
     int divisible = radicand_ % r_and_s.second;
     if(divisible == 0){
       result.push_back({r_and_s.first, (radicand_ / r_and_s.second)});

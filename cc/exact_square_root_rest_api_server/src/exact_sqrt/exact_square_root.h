@@ -23,16 +23,18 @@ class ExactSquareRoot {
   std::vector<int> GetOddNumbers();
   std::vector<int> CalcDefaultSqrts(std::vector<int> odd_numbers);
   void ZipRadicandsAndDefaultSqrts(std::vector<int> default_sqrts);
+  // new imperative Implementation
+  void SetSqrtAndRadicand();
   std::optional<int> SearchSimpleSqrt();
   std::vector<std::pair<int, int>> SearchComplexSqrt();
-  std::vector<std::pair<int, int>> GetRadicandAndSqrts() {return radicand_and_sqrt_;}
+  std::vector<std::pair<int, int>> GetRadicandAndSqrts() {return sqrt_and_radicand_;}
 
 
   private:
 
 
   int radicand_{0};
-  std::vector<std::pair<int, int>> radicand_and_sqrt_;
+  std::vector<std::pair<int, int>> sqrt_and_radicand_;
 };
 }
 #endif // EXACT_SQUARE_ROOT_H
