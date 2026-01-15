@@ -15,7 +15,7 @@ int main() {
     int next_id = 1;
     std::mutex mtx;
 
-    // HTTP-Server auf Port 8080
+    // HTTP-Server auf Port 8081
     httplib::Server svr;
 
     // Health-Check
@@ -90,15 +90,22 @@ int main() {
     // });
 
     // Einfache CORS-Unterstützung (optional)
-    // svr.Options(R"(/(.*))",  {
-    //     res.set_header("Access-Control-Allow-Origin", "*");
-    //     res.set_header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-    //     res.set_header("Access-Control-Allow-Headers", "Content-Type");
-    // });
-    // svr.set_pre_routing_handler( {
-    //     res.set_header("Access-Control-Allow-Origin", "*");
-    //     return httplib::Server::HandlerResponse::Unhandled;
-    // });
+    svr.set_error_handler([](const httplib::Request& req, httplib::Response& res) {
+      res.set_header("Access-Control-Allow-Origin", "*");
+      res.set_header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+      res.set_header("Access-Control-Allow-Headers", "Content-Type");
+    });
+
+    svr.Options(R"(/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+        res.set_header("Access-Control-Allow-Origin", "*");
+        res.set_header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+        res.set_header("Access-Control-Allow-Headers", "Content-Type");
+    });
+
+    svr.set_pre_routing_handler([](const httplib::Request& req, httplib::Response& res){
+        res.set_header("Access-Control-Allow-Origin", "*");
+        return httplib::Server::HandlerResponse::Unhandled;
+    });
 
     std::cout << "Server startet auf http://localhost:8081\n";
     // Start (blocking)
