@@ -11,4 +11,5 @@ function main(){
   // websocketHaskell()
   restApiHaskellExactSqrt()
   restApiRustExactSqrt()
+  restApiCcExactSqrt()
 }
