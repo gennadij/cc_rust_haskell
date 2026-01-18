@@ -17,71 +17,99 @@ digraph Arcitecture {
 }
 ```
 
-## Run project
+## Run project with all services
 
 ```console
 cd cc_rust_haskell
 docker compose up
-``
-## CC
-
-### run cmake
-
-```console
-cd build
-cmake ..
-cmake --build .
 ```
 
-or
+## CC
+
+- cmake (Generator Unix Makefiles)
+- Restserver htplib
+
+## Build, Run, Test
 
 ```console
-cmake -B build -S .
+cmake -B build .
 cmake --build build
 # run tests
 cd build
 ctest
-
+# run server
+./app/exact_square_root_rest_api_server
 ```
 
-### rest api
+### Access rest api in container
 
 ``` console
 curl http://localhost:8081/exactSquareRoot/1000
 ```
 
-### Docker CC sqrt
+### BUild exact-square-root-rest-api-server image
 
-```console  
-cd cc/exact_square_root_rest_api_server/
+``` console
+cd cc/exact-square-root-rest-api-server
 docker build -t cc_rest_api_server_sqrt .
-docker run -it -p 8081:8081 cc_rest_api_server_sqrt:latest
 ```
 
-### start docker rest api server  
+### Run exact-square-root-rest-api-server container
+
+```console  
+cd cc/exact_square_root_rest_api_server
+docker run -rm -it -p 8081:8081 cc_rest_api_server_sqrt:latest
+```
+
+### develop in VSCode
 
 ```console
-docker build -t example_restapi_json_server .
-docker run -it -v $(pwd):/app example_restapi_json_server bash
-docker run -it -p 8080:8080 -v $(pwd):/app example_restapi_json_server /app/start_rest_api_json_server.sh
+cd cc
+code .
 ```
 
 ## RUST
 
+### Build, Run, Test 
+
 ```console
-cargo new hello_world
+# Build
+cargo build
+# Build & Run 
 cargo run
+# Test
+cargo test
 ```
 
-### start docker rest api server rust (exact square root)
+### Access rest api in container
 
-```console
+``` console
+curl http://localhost:8083/exactSquareRoot/1000
+```
+
+### BUild exact-square-root-rest-api-server image
+
+``` console
 cd rust/exact-square-root-rest-api-server
 docker build -t rust_rest_api_server_sqrt .
-docker run -it -p 8083:8083 rust_rest_api_server_sqrt:latest
+```
+
+### Run exact-square-root-rest-api-server container
+
+```console  
+cd cc/exact_square_root_rest_api_server
+docker run -rm -it -p 8081:8081 rust_rest_api_server_sqrt:latest
+```
+
+### develop in VSCode
+
+```console
+cd cc
+code .
 ```
 
 ## HASKELL
+
 
 ### create project
 
@@ -130,5 +158,3 @@ docker run -it -p 8082:8082 haskell_rest_api_server_sqrt:latest /app/exact-squar
 docker build -t my-apache2 .
 docker run -it --name my-running-app -p 8080:80 my-apache2
 ```
-
-Access to fetch at 'http://localhost:8081/exactSquareRoot/1000' from origin 'http://localhost:8080' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
