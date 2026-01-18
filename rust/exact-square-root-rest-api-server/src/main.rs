@@ -35,7 +35,7 @@ async fn main() {
 }
 
 async fn exact_square_root(Path(param): Path<i64>) -> Json<Vec<Result>> {
-  use crate::exact_root::exact_root::get_exact_sqrt;
+  use crate::exact_root::get_exact_sqrt;
 
   let results = get_exact_sqrt(param);
   let mut json_results: Vec<Result> = vec![];
