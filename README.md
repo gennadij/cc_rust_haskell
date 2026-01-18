@@ -19,7 +19,7 @@ digraph Arcitecture {
 
 ## Exact sqrt logic
 
-The calculation uses the sum of the odd numbers.
+The calculation uses the sum of the odd numbers.  
 1 + 3 = [4]  
 4 + 5 = [4,9]  
 9 + 7 = [4,9,16]  
